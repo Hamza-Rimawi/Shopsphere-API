@@ -85,7 +85,7 @@ namespace ShopSphere.Controllers
                         issuer: "ShopSphereApi",
                         audience: "ShopSphereApiUsers",
                         claims: claims,
-                        expires: DateTime.Now.AddMinutes(1),
+                        expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: creds
                     );
                     var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
@@ -96,7 +96,7 @@ namespace ShopSphere.Controllers
                     {
                         CustomerID = customer.CustomerID,
                         TokenHash = BCrypt.Net.BCrypt.HashPassword(refreshToken),
-                        RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                        RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7),
                         CreatedAt = DateTime.UtcNow
                     };
 
@@ -164,7 +164,7 @@ namespace ShopSphere.Controllers
                 issuer: "ShopSphereApi",
                 audience: "ShopSphereApiUsers",
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(1),
+                expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: creds
             );
 
@@ -176,7 +176,7 @@ namespace ShopSphere.Controllers
             {
                 CustomerID = customer.CustomerID,
                 TokenHash = BCrypt.Net.BCrypt.HashPassword(newRefreshToken),
-                RefreshTokenExpiresAt = DateTime.UtcNow.AddMinutes(5),
+                RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7),
                 CreatedAt = DateTime.UtcNow
             };
 
