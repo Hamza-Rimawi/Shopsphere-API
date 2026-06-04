@@ -97,6 +97,7 @@ builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<IWalletTransactionsService, WalletTransactionsService>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 var connectionString = builder.Configuration.GetConnectionString("AzureConnection");
+var jwtKey = builder.Configuration["Jwt:Key"];
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
