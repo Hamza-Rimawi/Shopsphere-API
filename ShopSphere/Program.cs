@@ -98,6 +98,8 @@ builder.Services.AddScoped<IWalletTransactionsService, WalletTransactionsService
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 var connectionString = builder.Configuration.GetConnectionString("AzureConnection");
 var jwtKey = builder.Configuration["Jwt:Key"];
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+builder.Services.AddSingleton(key);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -131,7 +133,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             // The secret key used to validate the JWT signature.
             // This must be the same key used when generating the token.
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+            IssuerSigningKey = key
 
         };
     });
