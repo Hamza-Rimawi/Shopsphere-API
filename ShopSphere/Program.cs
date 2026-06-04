@@ -96,6 +96,8 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IShippingService, ShippingService>();
 builder.Services.AddScoped<IWalletTransactionsService, WalletTransactionsService>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+var connectionString = builder.Configuration.GetConnectionString("AzureConnection");
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
