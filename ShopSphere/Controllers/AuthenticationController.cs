@@ -48,7 +48,7 @@ namespace ShopSphere.Controllers
                     // If the password does not match the stored hash,
                     // return 401 Unauthorized.
                     if (!isValidPassword)
-                        return Unauthorized("Invalid credentials");
+                        return Unauthorized("PASS credentials");
 
 
                     // Step 3: Create claims that represent the authenticated user's identity.
