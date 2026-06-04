@@ -72,7 +72,7 @@ namespace ShopSphere.Controllers
                 return NotFound();
             return Ok(status);
         }
-
+[AllowAnonymous]
         [HttpPost("register", Name = "Register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
