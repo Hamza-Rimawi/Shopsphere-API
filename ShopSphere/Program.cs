@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("https://your-react-app.onrender.com",
+        policy.WithOrigins("https://shopspherehamzayahia.netlify.app",
             "https://localhost:7099", "http://localhost:5227", "http://localhost:5173")      
               .AllowAnyHeader()     
               .AllowAnyMethod();     
