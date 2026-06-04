@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ShopSphere.Business.DTOs.Auth;
@@ -19,10 +19,14 @@ namespace ShopSphere.Controllers
     {
         private readonly ICustomerService _customerService;
         private readonly IRefreshTokenService _refreshTokenService;
-        public AuthenticationController(ICustomerService customerService, IRefreshTokenService refreshTokenService)
+        private readonly SymmetricSecurityKey _key;
+
+       
+        public AuthenticationController(ICustomerService customerService, IRefreshTokenService refreshTokenService, SymmetricSecurityKey key)
         {
             _customerService = customerService;
             _refreshTokenService = refreshTokenService;
+            _key = key;
         }
         [HttpPost("login", Name = "Login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
@@ -66,13 +70,13 @@ namespace ShopSphere.Controllers
 
                     // Step 4: Create the symmetric security key used to sign the JWT.
                     // This key must match the key used in JWT validation middleware.
-                    var key = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes("THIS_IS_A_VERY_SECRET_KEY_123456"));
+                    
+
 
 
                     // Step 5: Define the signing credentials.
                     // This specifies the algorithm used to sign the token.
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
 
                     // Step 6: Create the JWT token.
@@ -152,10 +156,9 @@ namespace ShopSphere.Controllers
         new Claim(ClaimTypes.Role, customer.Role ? "Admin" : "User")
     };
 
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("THIS_IS_A_VERY_SECRET_KEY_123456"));
+            
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
             var jwt = new JwtSecurityToken(
                 issuer: "ShopSphereApi",
