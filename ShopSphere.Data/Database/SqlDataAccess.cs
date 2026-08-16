@@ -59,7 +59,6 @@ namespace ShopSphere.Business.Database
             return results;
         }
 
-        // For INSERT/UPDATE/DELETE (no return data)
         public async Task<int> SaveDataAsync<T>(
             string storedProcedure,
             T parameters,
@@ -77,7 +76,6 @@ namespace ShopSphere.Business.Database
                     command.Parameters.AddWithValue("@" + prop.Name, prop.GetValue(parameters) ?? DBNull.Value);
             }
 
-            // Add OUTPUT parameter for new ID if needed
             if (!string.IsNullOrEmpty(outputParameterName))
             {
                 var outputParam = new SqlParameter($"@{outputParameterName}", SqlDbType.Int)
@@ -95,7 +93,6 @@ namespace ShopSphere.Business.Database
             }
         }
 
-        // For getting single value (like SCOPE_IDENTITY)
         public async Task<T> ExecuteScalarAsync<T, U>(
             string storedProcedure,
             U parameters,
